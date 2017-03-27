@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>Webperf2.0</title>
+    <title>HTTP/2, what's new?</title>
 
 		<meta name="description" content="A Fasterize presentation talking about next generation of tricks to speed up your website">
 		<meta name="author" content="Fasterize">
@@ -41,86 +41,58 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
-					<h1>Webperf 2.0</h1>
-					<h3>Aller plus loin que les règles classiques</h3>
+					<h1>HTTP/2</h1>
+					<h3>What's new?</h3>
           <br>
           <br>
           <br>
           <br>
 					<p>
-						<h2>PerfUG Novembre 2016</h2>
+						<h2>Meetup Webperf Paris - Mars 2017</h2>
 					</p>
 					<p>
-						<small>@stefounet</small>
+					<br>
+          <small style="font-size:smaller!important;"><img src="assets/twitter-blue-bird.png" class="noborder" style="width: 40px;margin-top: 0px;margin-bottom: -10px;margin-right: 10px;">@stefounet &nbsp;&nbsp; #webperf</small>
 					</p>
           <aside class="notes">
-          Qui suis-je ?
-					<p>
-          Présentation en franglish
-
+            Qui suis-je ?
+            <p>
+            Présentation très rapide en franglish
           </aside>
 				</section>
 
        <section>
 
-           <section>
-            <h2>Petite</h2><h1>introduction</h1>
-            <h3>(pour ceux qui vivraient encore dans des datacenters)</h3>
+         <section>
+           <h2>Qui suis-je ?</h2>
+           <img src="assets/lapin.jpg" style="float:left;margin:50px 50px 100px 0" width="200">
+           <ul>
+             <li>ZX Spectrum en 1982, VIC20, C64, consoles, etc ...
+             <li>première page HTML en 1994 (NCSA Mosaic)
+             <li>Webnet (“webagency”) en 1996
+             <li>RueDuCommerce en 2000
+             <li>Fasterize en 2011
+          </ul>
+         </section>
 
-            <aside class="notes">
-              Rapidement, c'est quoi la webperf ?
-              <br>
-              <br>
-              Moi j'ai une définition simple
-            </aside>
+         <section>
+           <h2>Qui est Fasterize ?</h2>
+           <img src="assets/home-md.png" style="float:left;margin:50px 50px 100px 0;border:0!important" width="400">
+           <ul>
+             <li>Startup créée en 2011
+             <li>FEO en SaaS
+             <li>Audits Webperf
+             <li>150 sites
+           </ul>
+           <img src="assets/ref.png" style="background:white">
+         </section>
 
-          </section>
-
-          <section>
-            Faire que les sites Web se chargent plus rapidement, 
-            <span class="fragment">sur tous les navigateurs,</span> 
-            <span class="fragment">tous les devices,</span> 
-            <span class="fragment">toutes les connexions,</span>
-            <span class="fragment">pour tous les utilisateurs</span>
-            <p class="fragment">
-            <br>
-            <br>
-            <br>
-            <br>
-            Performance perçue : afficher quelque chose d'utile le plus rapidement possible
-            </p>
-            <aside class="notes">
-              Mais attention, il faut faire la différence avec la performance "perçue" (un peu comme la qualité perçue)
-            </aside>
-          </section>
-
-          <section>
-            <h2>backend/frontend</h2>
-            <img src="assets/waterfall.png" width="600"> 
- 
-            <aside class="notes">
-              <p>On peut agir à deux niveaux : backend et frontend
-              <p>Je parlerai essentiellement de frontend
-              <p>Sinon vous savez tous ce qu'est un waterfall ?
-            </aside>
-
-          </section>
-
-          <section>
-            mais pourquoi on fait ça ? 
+         <section>
+            pourquoi on fait ça ? 
 
             <aside class="notes">
               en ce qui me concerne c'est parce que j'ai codé en 1982 sur un ZX Spectrum avec 16Ko de RAM et aussi parce que j'ai un business là dessus ;-)
               <p>mais sinon ...
-            </aside>
-
-          </section>
-
-          <section>
-            <img src="assets/parce que.jpg">
-
-            <aside class="notes">
-            ah, et sinon pour de vrai, ben c'est pour les utilisateurs, parce qu'on n'aime pas attendre 
             </aside>
 
           </section>
@@ -137,113 +109,92 @@
           </section>
 
           <section data-transition="fast">
-            <img src="assets/conversion rate vs loadtime.jpg">
- 
-            <aside class="notes">
-              <p>distribution des temps de chargement vs le taux de conversion et on voit donc clairement qu'un internaute qui charge le site rapidement transforme mieux.
-              <p>A noter que cette distribution n'est pas une gaussienne et donc mesurer des moyennes de temps de chargement n'est pas très pertinent dans notre métier (=&gt;percentile)
-              <p>A noter aussi que la courbe du taux de conversion redescend vers les valeurs proches de zero car ça correspond à des bots et aussi qu'il y a interpolation
-              <p>src : webperf.io + Fasterize cusotmer
-            </aside>
-
-          </section>
-
-          <section data-transition="fast">
-            <img src="assets/pageviews vs loadtime.jpg">
-
-            <aside class="notes">
-              on peut même le mesurer avec des tests A/B !
-            </aside>
-
-          </section>
-
-          <section data-transition="fast">
             <img src="assets/ABtest.png">
 
             <aside class="notes">
-              et dernier graphique que je trouve vraiment super intéressant c'est le funnel où on mesure ce qui se passe pour les utilisateurs à chaque étape en terme de temps de chargement
+            Notre sujet aujourd'hui c'est ce qu'apporte HTTP2 en terme de webperf.
+            Donc d'abord c'est quoi HTTP2
             </aside>
 
           </section>
  
-          <section data-transition="fast">
-            <img src="assets/funnel.png">
+       </section>
+
+       <section>
+         <section>
+            <h1>Intro</h1>
+            <h3>(c'est quoi HTTP/2 ?)</h3>
 
             <aside class="notes">
-              ah oui et pour ceux qui se posent la question, ce n'est pas près de s'arrêter 
-              <p>src : Cedexis Impact
+              <br>
+              eh ben c'est le successeur de HTTP/1.1
+              allez c'est fini, merci, au revoir !
+              <br>
+              RFC date de mai 2015
             </aside>
 
           </section>
-          
+         <section class="no-transition">
+            <h2>La suite de HTTP/1.1</h2>
+            <div align="left" style="float:left; width:50%;margin-bottom:400px;margin-right:50px">
+                <img src="assets/headers.png" class="fragment" data-fragment-index="2">
+            </div>
+            <ul>
+              <li class="fragment" data-fragment-index="1">Même sémantique</li>
+            </ul> 
+
+            <aside class="notes">
+              <p>qu'est-ce que ça veut dire du coup ?
+              <p>on retrouve les mêmes verbes HTTP, les mêmes headers, les mêmes réponses mais on encapsule ça dans un nouveau format (ça veut dire aussi mêmes outils)
+              <p>S'appuie sur les mêmes couches TCP
+              <p>binary =&gt; plus de de Telnet direct sur le port 80 et surtout parsing plus facile (champs délimités)
+              <p>une requête n'est pas obligé d'attendre une réponse pour se lancer 
+              <p>le serveur (donc l'application) peut décider quelles resources sont prioritaires et les prioriser dans le flux (mais concrètement très peu de navigateurs l'utilisent)
+              <p>le serveur peut envoyer des resources qui n'ont pas encore été requêtées (avec un mécanisme d'annulation possible si le navigateur l'a dans le cache
+              <p> au niveau des règles ça veut dire quoi ?  
+            </aside>
+
+          </section>
+         <section class="no-transition">
+            <h2>La suite de HTTP/1.1</h2>
+            <div align="left" style="float:left; width:50%;margin-bottom:400px;margin-right:50px">
+              <img src="assets/http2_2.png" >
+              <img src="assets/http2_1.png" class="fragment" data-fragment-index="3">
+            </div>
+            <ul>
+              <li>Même sémantique</li>
+              <li >Protocole binaire</li>
+              <li class="fragment" data-fragment-index="3">Une seule connexion TCP</li>
+              <li class="fragment" data-fragment-index="3">Plusieurs requêtes en parallèle (streams)</li>
+              <li class="fragment" data-fragment-index="4">Compression des headers HTTP (HPACK)</li>
+              <li class="fragment" data-fragment-index="5">Priorisation des streams (HTML <span style="font-size:smaller">vs</span> CSS <span style="font-size:smaller">vs</span> JS <span style="font-size:smaller">vs</span> IMG)</li>
+              <li class="fragment" data-fragment-index="6">Server push</li>
+            </ul> 
+
+            <aside class="notes">
+              <p>qu'est-ce que ça veut dire du coup ?
+              <p>on retrouve les mêmes verbes HTTP, les mêmes headers, les mêmes réponses mais on encapsule ça dans un nouveau format
+              <p>S'appuie sur les mêmes couches TCP
+              <p>binary =&gt; plus de de Telnet direct sur le port 80 et surtout parsing plus facile (champs délimités)
+              <p>une requête n'est pas obligé d'attendre une réponse pour se lancer 
+              <p><p>demo Akamai
+              <p>le serveur (donc l'application) peut décider quelles resources sont prioritaires et les prioriser dans le flux (mais concrètement très peu de navigateurs l'utilisent)
+              <p>le serveur peut envoyer des resources qui n'ont pas encore été requêtées (avec un mécanisme d'annulation possible si le navigateur l'a dans le cache
+              <p> au niveau des règles ça veut dire quoi ?  
+            </aside>
+
+          </section>
+
+
           <section>
-            <video  controls src="assets/video Cdiscount.ogg">  
-             <aside class="notes">
-              ça c'est la représentation en 3D d'une page HTML (une fiche produit) d'un grand site ecommerce (il faut être honnête c'était il y a quelques années ... aujourd'hui ce serait pire ! :-) 
-            </aside>
-
-         </section>
-
-          <section data-transition="fast">
-            <img src="assets/evolution size.png">
-
-            <aside class="notes">
-              <p>ça montre l'évolution du poids et de la complexité des pages depuis environ 4 ans
-              <p> on est passé de 700ko a 2Mo
-              <p>src : httparchive
-            </aside>
-
+            <h2>Impact sur le waterfall</h2>
+            <img src="assets/http vs spdy.jpg">
           </section>
-
-          <section data-transition="fast">
-            <img src="assets/evolution size JS.png"> 
-
-            <aside class="notes">
-              ça vaut pour les JS
-            </aside>
-
-          </section>
-
-          <section data-transition="fast">
-            <img src="assets/evolution size CSS.png"> 
-
-            <aside class="notes">
-              pour les CSS
-            </aside>
-
-          </section>
-
-          <section data-transition="fast">
-            <img src="assets/evolution size image.png"> 
-
-            <aside class="notes">
-              pour les images
-            </aside>
-
-          </section>
-
-          <section data-transition="fast">
-            <img src="assets/evolution size font.png">
-
-            <aside class="notes">
-              et plus récemmment et peut être avec plus d'impact, pour les fonts
-
-              <br>
-              <br>
-              <br>
-
-              mais heureusement y'a des règles qui existent pour améliorer les perfs
-            </aside>
-
-          </section>
-
         </section>
 
-        <section>
-
+        <section>  
           <section>
-            <h1>Les limites des règles actuelles</h1>
-            <h3>quand la webperf va à l'encontre de la webperf</h3>
+            <h1>Impact sur les règles actuelles</h1>
 
             <aside class="notes">
               Les règles de la Webperf ont été édicté en 2007 par Steve Moise Souders dans un bouquin appelé "High Performance Websites"
@@ -297,11 +248,10 @@
               <p>Mais pourquoi ces règles existent, d'où elles sortent ?
             </aside>
 
- 
          </section>
 
-          <section>
-            d'où elles viennent : 
+         <section>
+           pourquoi ces règles ?
 
             <ul>
               <li class="fragment">latence</li>
@@ -317,561 +267,156 @@
                 <li>le protocole TCP, c'est la couche de transport de nos réseaux, celle qui s'assure qu'on reçoit bien ce qui a été envoyé
                 <li>les navigateurs, ben si vous avez connu un monde avec IE5.5, vous savez qu'il y en a des limites
                 <li>le protocole HTTP1.1 a des limitations sur la façon de se connecter, on peut dire qu'il est pas très connecté et en plus il est sujet a mille interprétations
-                <li>enfin tout ça a été rédigé en 2006, lancement du premier iphone : 2007
+                <li>enfin tout ça a été rédigé en 2006, lancement du premier iphone : 2007<br><br>
+                <li>on notera donc que le HTTP/2 ne remplace qu'une partie du problème : latence, TCP, navigateurs, device mobile restent identiques et voire il en introduit d'autres
               </ul>
             </aside>
 
-          </section>
-
-          <section>
-            <p>mais en fait, aujourd'hui</p>
-            <ul>
-              <li class="fragment">les navigateurs ont évolué en 10 ans (Firefox 49, Chrome 53, Edge)</li>
-              <li class="fragment">les terminaux ont changé </li>
-              <li class="fragment">les protocoles sont en train de changer (SPDY/HTTP2)</li>
-              <li class="fragment">même les couches réseaux sont remises en cause (QUIC)</li>
-            </ul>
-            <span class="fragment">et en plus</span>
-            <ul class="fragment">
-              <li>la manière de coder des sites a changé : SPA, RWD</li>
-              <li>les widgets ont explosé à cause des tags managers</li>
-            </ul>
-
-            <aside class="notes">
-              <p>RFC 7540 de HTTP2 c'est mai 2015
-              <p>le nombre de requêtes a aussi explosé à cause du business de la pub et des trackers
-            </aside>
-
-          </section>
-
-          <section data-background="assets/widgets.jpg">
-            
-            <aside class="notes">
-              Avant de passer sur les règles en elles-mêmes, je voudrais revenir sur cet aspect mobile-first pour que vous compreniez bien l'importance de ce point
-            </aside>
-
-          </section>
-
-          <section>
-            <h1>Mobile-First</h1>
-            <aside class="notes">
-              <p>Aujourd'hui, le mobile représente 50% du surf ou plus : on rigolait encore y'a 3 ans quand tous les ans le gartner prévoyait que 50% du surf serait sur mobile mais on y est
-            </aside>
          </section>
 
-          <section class="no-transition">
-            <img src="assets/mobile sales.png">
-            <aside class="notes">
-              <p>Les ventes de smartphones c'est 350 millions par trimestre !
-              <p>src : https://aasaindustryanalysis.wordpress.com/2015/08/04/smartphone-market-continues-upswing-in-q2/
-            </aside>
-          </section>
 
-          <section class="no-transition">
-            <img src="assets/1 billion ios.jpg">
-            <aside class="notes">
-              <p>Apple a annoncé qu'ils avaient vendus leur milliardième appareil sous iOS
-              <p>src : Keynote Apple sept 2016 + http://www.siliconbeat.com/2016/04/01/apple-40-emerging-markets-may-provide-youthful-spark/
-            </aside>
-          </section>
-
-          <section class="no-transition">
-            <img src="assets/mobile adoption.png">
-            <aside class="notes">
-              <p>Et en terme de moyen d'accès à l'internet, les 15-34 ans utilisent majoritairement le mobile (les autres sont en train d'y venir)
-            </aside>
-          </section>
-
-          <section class="no-transition">
-            <img src="assets/mcommerce.png">
-            <div style="float:left;width:45%"><span style="color:#4F81E2">60% DESKTOP</span><br>
-              <span style="color:#35BC36">40% MOBILE /</span><span style="color:#E58D10"> TABLETTE</span>
-            </div>
-            <div style="float:right;width:45%"><span style="color:#4F81E2">25% DESKTOP</span><br>
-              <span style="color:#35BC36">75% MOBILE /</span><span style="color:#E58D10"> TABLETTE</span>
-            </div>
-            <aside class="notes">
-              <p>Etude faite sur un ensemble de magasins en ligne US pour la rentrée 2015
-              <p>src : www.soasta.com/blog/back-to-school-website-performance-monitoring/
-            </aside>
-          </section>
-
-          <section class="no-transition">
-            <img src="assets/mobile adoption JP.png">
-            <aside class="notes">
-              <p>Dans certains pays (ici le Japon), 80% du surf se fait sur mobile (données réelles d'un acteur de la cosmétique)
-              <p>src : private access to Google Analytics
-            </aside>
-          </section>
-
-          <section class="no-transition">
-            <h2>Mobile - Only</h2>
-            <img src="assets/mobile only.png">
-            <aside class="notes">
-              <p>Et aujourd'hui, dans certains cas, c'est pas mobile-first mais mobile-only !
-              <p>Par exemple en Afrique, sans faire trop de généralités, les réseaux sont majoritairement mobiles (ils vont prendre le raccourci sans passer par la case ADSL ou même fibre)
-              <p>Certains foyers ne prennent que des abonnements mobiles pour économiser
-              <p>src : http://www.pewinternet.org/2015/12/21/home-broadband-2015/
-            </aside>
-          </section>
-
-           <section class="no-transition">
-            <img src="assets/mobile doubleclick study.png">
-            <aside class="notes">
-              <p>Et puis récemment (début sept 2016), une étude faite par Doubleclick (qui appartient à Google) a encore sorti des chiffres intéressants
-              <p>https://www.doubleclickbygoogle.com/articles/mobile-speed-matters/
-            </aside>
-          </section>
-
-          <section class="no-transition">
-            <img style="float:left" src="assets/mobile 3s.png"><div style="float:right;width:50%;font-size:2em"><span style="color:#FF7F00">53%</span> des visites sont <span style="color:#FF7F00">abandonnées</span> si le site mobile met plus de <span style="color:#FF7F00">3s</span> à charger !</div>
-            <aside class="notes">
-              <p>Et là il faut bien comprendre que les utilisateurs sur mobile sont plus exigeants car ils sont en situation de mobilité, entre deux métros, etc ...
-            </aside>
-          </section>
-
-          <section class="no-transition">
-            <img src="assets/mobile waiting 46.png"><span style="font-size:1.4em"><span style="color:#FF7F00">46%</span> des consommateurs disent qu’<span style="color:#FF7F00">attendre des pages</span> qui se chargent est ce qu’il <span style="color:#FF7F00">détestent</span> le plus quand il surfent sur mobile
-            <aside class="notes">
-              Vous allez me dire "on a la 4G"
-            </aside>
-          </section>
-
-          <section class="no-transition">
-            <img src="assets/mobile facebook.png">
-            <aside class="notes">
-              <p>Eh bien d'abord c'est loin d'être le cas pour tout le monde (et rappelez vous que quand on construit une autoroute, elles sont vite remplies = quand on agrandit les tuyaux, les sites prennent tous rapidement du poids)
-              <p>Facebook a même instauré un jour où les connexions mobiles se font en 2G pour que les ingénieurs se rendent compte
-              <p>Et il faut savoir qu'il y a plus de personnes qui accèdent à Facebook en 2G qu'en 4G
-              <p>src : http://uk.businessinsider.com/facebook-2g-tuesdays-to-slow-employee-internet-speeds-down-2015-10 + https://twitter.com/BenedictEvans/status/513017790920290304  
-            </aside>
-          </section>
-
-          <section class="no-transition">
-            <img style="float:left" src="assets/mobile data contract.png">
-            <div style="float:right;width:50%;font-size:1.6em">37% des possesseurs de smartphone <span style="color:#F6941E">atteignent la limite de leur forfait data</span> au moins une fois. 
-              <br><br>Bien <span style="color:#982632">15%</span> disent que ça arrive « <span style="color:#982632">fréquemment</span> » !
-            </div>
-            <aside class="notes">
-              <p>src : http://www.pewinternet.org/2015/04/01/us-smartphone-use-in-2015/
-            </aside>
-          </section>
-
-          <section class="no-transition">
-            <img src="assets/mobility.png">
-            <aside class="notes">
-              <p>Qui dit mobile, dit mobilité et donc perte de connexion
-              <p>Etude sur un trajet en train (Amtrak) avec un accès Wifi. au final, mauvaise connexion mesurée quasiment tout le long du trajet
-              <p>src : https://consumerist.com/2015/04/23/amtrak-wifi-so-slow-it-might-as-well-not-exist/
-            </aside>
-          </section>
-
-          <section class="no-transition">
-            <img src="assets/mobile latency.png">
-            <aside class="notes">
-              optimistic 100 ms roundtrip time for 4G and a 200 ms roundtrip time for 3.5G+ networks
-            </aside>
-          </section>
-
-          <section>
-            <h2>Preloader / speculative parser / Lookahead downloader</h2>
-            Attention à ne pas masquer les objets <span class="fragment">(ou le contraire)</span>
-            <img class="fragment" src="assets/lazyloading.png">
-            <aside class="notes">
-            <p>src: http://andydavies.me/blog/2013/10/22/how-the-browser-pre-loader-makes-pages-load-faster/
-            <p>src : https://cloudfour.com/thinks/the-real-conflict-behind-picture-and-srcset/
-            </aside>
-          </section>
-
-          <section>
-            <h2>Les règles actuelles</h2>
-            <aside class="notes">
-              tout ça pour dire que ce qui a changé c'est la prise en compte plus forte du contexte
-              ce qui n'a pas disparu : latence
-              <p>et donc ça conduit à une situation où les règles classiques de la webperf, celles que tout le monde connait, sont devenues dans certains cas contre productives !
-              <p>Alors .... petit tour de ces fameuses règles
-            </aside>
-
-          </section>
-
-          <section class="no-transition">
-            <h2>Concatenation</h2>
-            <h3>
-              <span class="fragment">JS / CSS</span><span class="fragment">, Images</span>
-            </h3>
-            <ul>
-              <li class="fragment">un seul gros fichier peut ralentir la page</li>
-            </ul>
-            <img src="assets/bigCSS.png" class="fragment">
-
-          </section>
-
-          <section class="no-transition">
-            <h2>Concatenation</h2>
-            <h3>
-              <span>JS / CSS, Images</span>
-            </h3>
-            <ul>
-              <li>un seul gros fichier peut ralentir la page</li>
-              <li>limites d'IE9</li>
-              <li class="fragment">impossible d'établir une priorité dans le code téléchargé</li>
-              <li class="fragment">ça casse le cache (et le flush est plus contraignant)</li>
-              <li class="fragment">maintenabilité</li>
-             </ul>
-             <img src="assets/divCombinedAndMinified.png" class="fragment" width="800">
-
-            <aside class="notes">
-              <p>ça concerne les JS et les CSS mais aussi les images avec la technique du spriting
-              <p>La concaténation vient de deux choses : nb de requêtes possibles en parallèle, latence, connexion TCP 
-              <p>1. surtout le cas pour les ressrouces bloquantes. J'ai déjà croisé des CSS de 1Mo, à cause des fonts inlinées
-              <p>Le plus énervant c'est quand GTMetrix ou WPT vous dit que vous n'avez pas combiné vos CSS/JS : mais c'est ça que je veux faire !
-              <p>limites IE9 : 4096 sélecteurs/fichiers, max 278ko, max 31 @import dans un CSS, @import nesting supports up to 4 levels deep
-            </aside>
-
-          </section>
-
-          <section data-transition="fast">
-            <h2>Concatenation</h2>
-            <h3>
-              <span>JS / CSS, Images</span>
-            </h3>
-            <p><br>
-            <p><br>
-            <p>Trouver un intermédiaire en fonction de la taille et de la composition du site.</p>
-            <p><br>
-            <p class="fragment">Et aussi avoir un bon process de build</p>
-
-            <aside class="notes">
-              <p>ça concerne les JS et les CSS mais aussi les images avec la technique du spriting
-              <p>La concaténation vient de deux choses : nb de requêtes possibles en parallèle, latence, connexion TCP 
-              <p>1. surtout le cas pour les ressrouces bloquantes. J'ai déjà croisé des CSS de 1Mo, à cause des fonts inlinées
-              <p>Le plus énervant c'est quand GTMetrix ou WPT vous dit que vous n'avez pas combiné vos CSS/JS : mais c'est ça que je veux faire !
-            </aside>
-
-          </section>
-          <section>
-            <h2>Sharding / Cookieless domain</h2>
-            <ul>
-              <li>introduit de nouvelles résolutions DNS, en général dans le <code>&lt;head&gt;</code></li>
-              <li>"low" vs high latency network</li>
-            </ul>
-
-            <p class="fragment">Vaut mieux éviter, surtout pour les ressources bloquantes</p>
-
-            <aside class="notes">
-              <p>Définition du sharding/cookieless domain
-              <p>ça vient de deux choses : nb de requêtes possibles en parallèle, upload limité, pas de compression des headers 
-              <p>mais aujourd'hui les navigateurs sont passés de 2 à 6 requêtes en // par domaine
-              <p>low : mobile ou Chine
-              <p>deja vu : 4 ou 5 domaines statiques différents (cf. https://www.fasterize.com/en/website_configs/1998/hosts_mapping) =&gt; unsharding
-              <p>heureusement, surtout en HTTP2, certains navigateurs détectent que c'est le même serveur derrière et ne refont pas de connexion TCP (mais ils ne font pas tous la détection avec le même algorithme)
-            </aside>
-
-          </section>
-
-          <section>
-            <h2>Lazyloading</h2>
-            <ul>
-              <li>Lazyloader les premières images est une mauvaise idée !</li>
-              <li>A réserver aux images en dessous de la ligne de flottaison</li>
-            </ul>
-
-            <aside class="notes">
-              l'explication est simple : le préparser/preloader/speculative parser va chercher les élements en avance de phase avant de construire le DOM
-              <p>en faisant du lazyloading, on masque les images à ce preloader et on délègue le chargement à un script qui peut s'exécuter assez tard
-            </aside>
-
-          </section>
-
-          <section>
-            <h2>JS at the bottom</h2>
-
-            <img src="assets/Js at the bottom.png">
-            <aside class="notes">
-              l'explication est la même : le préparser/preloader/speculative parser va chercher les élements en avance de phase avant de construire le DOM
-              <p>c'est assez amusant de voir le JS tout en bas de page sortir en seconde requête :-)
-              <p>en fait vaut mieux mettre les scripts en async/defer qu'en bas
-            </aside>
-
-           </section>
-
-          <section>
-            <h2>Minification</h2>
-            <ul>
-              <li class="fragment">gain minime</li>
-              <li class="fragment">sauf si on minifie de façon agressive</li>
-              <li class="fragment">mais peu de personnes le font parce que ça peut être dangereux</li>
-            </ul>
-
-            <aside class="notes">
-              c'est du markete de la perf, ça enquiquinne tout le monde et personne n'a fait d'étude pour savoir si ça avait un vrai impact sur le parsing (source map)
-              Au final, quand j'entends des gens qui se lancent aujourd'hui  dans la minification et la concaténation JS/CSS, je leur dis "surtout pas malheureux !" 
-            </aside>
-
-          </section>
-
-        </section>
-
-        <section>
-
-          <section>
-            <h1>et si on allait plus loin ?</h1>
- 
-            <aside class="notes">
-
-            </aside>
-
-          </section>
-
-        </section>
-
-        <section>
-
-          <section>
-            <h1>cache cache</h1>
-            et pour commencer si on faisait plus de cache ?
-
-            <aside class="notes">
-              d'accord vous allez dire, on s'est fait avoir, webperf 2.0 mon oeil il va me dire de mettre mes pages en cache
-              <p>eh ben oui, exactement
-              <p>c'est pas la technique du futur c'est vrai mais ça a tellement d'avantage ...
-              <p>D'abord, cacher ce qui est cachable, ça semble évident mais bon ...
-              <p>ensuite
-            </aside>
-
-          </section>
-
-          <section>
-            <h2>Cookieless cache</h2>
-            <p><br>
-            <p><br>
-
-              <p class="fragment">Cacher les pages dynamiques pour les nouveaux utilisateurs ou  les utilisateurs anonymes</p>
- 
-            <aside class="notes">
-              pour les utilisateurs qui ne sont jamais venus sur votre site, pas besoin d'aller dans la base de données lui chercher un panier vide
-              <p> a noter que ça fonctionne aussi pour les bots ... je dis ça comme ça ...
-            </aside>
-
-          </section>
-
-          <section>
-            <h2>ESI/Ajax</h2>
-            <p><br>
-            <p><br>
-            <p class="fragment">Cacher les pages HTML et ajouter les parties dynamiques en Ajax</p>
- 
-            <aside class="notes">
-              Là ça consiste à cacher le layout pour répondre instantanément et accélerer le start render et ensuite enrichir avec les données dynamiques
-              <p>Facebook en 2010 avait "industrialisé" ça avec une technique appelée BigPipe (qui a été reprise par Drupal au début de l'année)
-              en fait ça revient à utiliser une technique plus générale, le chargement progressif
-            </aside>
-
-          </section>
-
-        </section>
-
-        <section>
-        
-          <section>
-            <h1>Chargement progressif</h1>
- 
-            <aside class="notes">
-            C'est d'ailleurs un thème majeur à suivre dans la webperf : le chargement progressif.
-            <p>ça consiste à charger la page avec des fonctionnalités minimales, un rendu suffisant pour tout ce qui est au dessus de la ligne de flottaison et ensuite de charger petit à petit le reste : les CSS manquants (pour les popups par ex), le JS pour l'interaction, les widgets, les CSS pour les autres pages, etc ...
-            <p>Attention ce sont des techniques de sioux mais ce sont surement celles qui donnent le plus de résultat aujourd'hui
-            </aside>
-
-          </section>
-
-          <section>
-            <h2>Techniques de <span style="font-size:0.7em">(petit)</span> sioux</h2>
-
-            <ul>
-              <li class="fragment">JS async/defer/iframe</li>
-              <img class="fragment" src="assets/defer vs async.jpg">
-              <li class="fragment">Lazyloading image/iframe</li>
-            </ul>
- 
-            <aside class="notes">
-              <p>Y'a celles qu'on connait déjà
-              defer vs async: 
-            </aside>
-
-          </section>
-
-          <section class="no-transition">
-            <h2>Techniques de <span style="font-size:1.2em">(grand)</span> sioux</h2>
-
-            <ul>
-              <li class="fragment">Async font loading</li>
-              <ul class="fragment">
-                <li>Chargement des fonts via loadCSS + preload
-                <li>Application quand les fonts sont disponibles (font event / polyfill fontFaceObserver)
-                <li>tradeoff (FOUT, FOIT, FOFT vs maintenance)
-              </ul>
-            </ul>
-            <br> 
-            <br> 
-            <br> 
-            <br> 
-            <br> 
-            <br> 
-            <br> 
-            <br> 
-            <aside class="notes">
-              C'est quand même assez difficile à automatiser mais les résultats peuvent être très bons !
-              <p>src: https://www.zachleat.com/web/comprehensive-webfonts/
-            </aside>
-
-          </section>
-
-          <section class="no-transition">
-            <h2>Techniques de <span style="font-size:1.2em">(grand)</span> sioux</h2>
-
-            <ul>
-              <li class="fragment">Inline critical CSS/JS + async loading</li>
-                <ul class="fragment">
-                  <li>Séparer ce qui est critique pour le rendu ATF
-                  <li>Inliner ce qui est critique
-                  <li>Charger le reste en asynchrone
-                  <li>Charger la totale ensuite pour remplir le cache
-                </ul>
-              <li class="fragment">Inline first view</li>
-            </ul>
-            <br> 
-            <br> 
- 
-            <span class="fragment">Prévoir la gestion du cache vs inline (cookie ou localStorage)</span>
-            <br> 
-            <br> 
-            <br> 
-            <br> 
-            <aside class="notes">
-              C'est quand même assez difficile à automatiser mais les résultats peuvent être très bons !
-              A noter que ces techniques vont peut être être complètement bouleversé car les navigateurs sont en train de passer à un mode où les CSS dans le body seraient autorisés et ne bloqueraient pas le rendu
-              <p>src: https://jakearchibald.com/2016/link-in-body/
-            </aside>
-
-          </section>
-          <section>
-            <h2>Mobile-first => Mobile-only => Offline-first</h2>
-          </section>
-
-        </section>
-        
-        <section>
-
-          <section>
-           <h1>Pré-</h1>
- 
-            <aside class="notes">
-            </aside>
-
-          </section>
-
-          <section>
-            <h2>plusieurs types</h2>
-            <h3>preconnect, prefetch, prerender, preload, dns-prefetch</h3>
+         <section>
+           <h2>Ce qu'il faut changer</h2>
+           <h3 class="fragment">(à priori)</h3>
            <ul>
-             <li class="fragment">pas supporté par tous<img src="assets/preload support.png"></li>
-             <li class="fragment">accessible en &lt;link&gt; ou en header HTTP Link:
-             <img src="assets/preload http.png">
-             <img src="assets/preload markup.png"></li>
-             <li class="fragment">certaines fois accessible via JS</li>
- 
-            <aside class="notes">
-              <p>gros potentiel mais quelques de difficultés à surmonter
-              <p>utile pour des pages connues à l'avance : soit par analyse statistiques, soit sur des tunnels
-              <p>le dns-prefetch ne sert pas à grand chose si le preparser peut les découvrir tout seul
-              ou si les domaines arrivent tôt dans la page
-            </aside>
-
-          </section>
-
-        </section>
-
-        <section>
-
-          <section>
-            <h1>HTTP2 est arrrrivééé</h1>
-            <audio src="assets/zorro.mp3" controls data-autoplay>
- 
-            <aside class="notes">
-            </aside>
-
-          </section>
-
-          <section>
-            <p class="quote">"we’re not replacing all of HTTP — the methods, status codes, and most of the headers you use today will be the same. Instead, we’re re-defining how it gets used “on the wire” so it’s more efficient, and so that it is more gentle to the Internet itself ...." — @mnot</p>
-            <br>
-            <div align="left" style="float:left; width:50%;margin-bottom:400px;margin-right:50px">
-              <img src="assets/http2_2.png">
-              <img src="assets/http2_1.png">
-            </div>
-            <ul>
-              <li>New binary framing</li>
-              <li>One connection (session)</li>
-              <li>Many parallel requests (streams)</li>
-              <li>Header compression</li>
-              <li>Stream prioritization</li>
-              <li>Server push</li>
-            </ul> 
-
-            <aside class="notes">
-              <p>qu'est-ce que ça veut dire du coup ?
-              <p>S'appuie sur TCP
-              <p>binary =&gt; plus de de Telnet direct sur le port 80
-              <p>une requête n'est pas obligé d'attendre une réponse pour se lancer 
-              <p>le serveur (donc l'application) peut décider quelles resources sont prioritaires et les prioriser dans le flux (mais concrètement très peu de navigateurs l'utilisent)
-              <p>le serveur peut envoyer des resources qui n'ont pas encore été requêtées (avec un mécanisme d'annulation possible si le navigateur l'a dans le cache
-              <p> au niveau des règles ça veut dire quoi ?  
-            </aside>
-
-          </section>
-
-          <section>
-            <h2>Impact sur le waterfall</h2>
-            <img src="assets/http vs spdy.jpg">
-          </section>
-
-          <section>
-            <h2>Impacts sur les règles</h2>
-            <ul>
-              <li class="fragment">suppression de la concaténation
-              <ul>
-                <li>démarrage du parsing et de l'exécution plus tôt</li>
-                <li>optimisation du cache entre les pages</li>
-              </ul></li>
-              <li class="fragment">suppression/limitation du sharding
-              <ul>
-                <li>limite le nb de résolutions DNS</li>
-                <li>limite le slow start des nouvelles connexions</li>
-              </ul></li>
+              <li class="fragment">Concaténation</li>
+              <li class="fragment">Sharding</li>
+              <li class="fragment">Cookie-less domain</li>
+              <li class="fragment">Critical CSS inlining / preloading</li>
             </ul>
 
             <aside class="notes">
-              sauf si vous avez 25 fichiers JS
-              <p>sauf si vous avez besoin d'un domain statique
+              <p>Concat =&gt; pas besoin car une seule connexion et toutes en parallèle
+              <p>Sharding =&gt; pas besoin de multiplier le nb de domaines car connexion en parallèle =100 (au lieu de 6)
+              <p>Cookie-less domain =&gt; pas besoin car les cookies sont des headers et sont compressés,
+              <p>Inlining =&gt; pas besoin car server push
             </aside>
 
-          </section>
+         </section>
 
-          <section>
+         <section>
+           <h2>Concaténation</h2>
+           <ul>
+              <li>Avantages
+                <ul class="fragment">
+                  <li>?</li>
+                </ul>
+              </li>
+              <li class="fragment">Inconv&eacute;nients
+                <ul>
+                  <li class="fragment">process de build / maintenance
+                  <li class="fragment">démarrage du parsing et de l'exécution plus tard</li>
+                  <li class="fragment">pas d'optimisation du cache entre les pages</li>
+                </ul>
+              </li>
+              <li class="fragment">Cool alors !?</li>
+            </ul>
+
+            <aside class="notes">
+              ça vaut aussi pour les images la concat =&acute; spriting
+            </aside>
+
+         </section>
+
+         <section class="no-transition">
+           <h2>Concaténation</h2>
+           <ul>
+             <li>Taux de compression des petits fichiers
+               <img src="assets/compressionratio.png" width="400">
+             </li>
+             <li class="fragment">Améliorations possibles
+             <ul>
+               <li>SDCH
+               <li>compression dictionaries (draft)
+             </ul>
+            </ul>
+
+            <aside class="notes">
+            <p>Comme aujourd'hui, faites de la concaténation raisonnée ! intermédiaire entre un seul gros fichier et 25 petits fichiers
+            <p>et posez vous la question pour le spriting (car les images sont à priori déjà compressées)
+            </aside>
+
+         </section>
+
+
+         <section>
+           <h2>Sharding & cookie-less domain</h2>
+           <ul>
+              <li>Avantages
+                <ul>
+                  <li>mise en place CDN pour les statiques</li>
+                  <li>cookie-less domain</li>
+                </ul>
+              </li>
+              <li class="fragment">Inconv&eacute;nients
+                <ul>
+                  <li>ajoute des résolutions DNS</li>
+                  <li>ajoute des nouvelles connexions TCP/TLS</li>
+                  <li>ajoute des certificats</li>
+                  <li>combien de domaines ?</li>
+                </ul>
+              </li>
+              <li class="fragment">Cool alors !?</li>
+            </ul>
+
+            <aside class="notes">
+            </aside>
+
+         </section>
+
+         <section class="no-transition">
+           <h2>Sharding & Cookie-less domain</h2>
+           <ul>
+             <li>Full-site CDN
+             </li>
+             <li class="fragment">Améliorations possibles
+             <ul>
+               <li>éléments critiques sur le même domaine (CSS, JS non différé)
+               <li>le reste sur un sous-domaine CDN en HTTP2 avec le même certificat
+             </ul>
+            </ul>
+
+            <aside class="notes">
+              <p>
+            </aside>
+
+         </section>
+         <section>
+           <h2>Critical inlining / Preload</h2>
+           <ul>
+              <li>Avantages
+                <ul class="fragment">
+                  <li>efficace !</li>
+                </ul>
+              </li>
+              <li class="fragment">Inconv&eacute;nients
+                <ul>
+                  <li class="fragment">process de build / versions différentes suivant device</li>
+                  <li class="fragment">support par les navigateurs</li>
+                  <li class="fragment">complexité de mise en oeuvre</li>
+                </ul>
+              </li>
+              <li class="fragment">Cool alors !?</li>
+            </ul>
+
+            <aside class="notes">
+            </aside>
+
+         </section>
+
+         <section>
             <h2>Server Push</h2>
 
             <ul>
               <li class="fragment">implémentations limitées (h2o, nghttp2, apache, <span style="text-decoration:line-through">nginx</span>)</li>
-              <li class="fragment">utilise <code>Link: rel="preload"</code></li>
               <li class="fragment">attention au cache</li>
               <img class="fragment" src="assets/http2 casper cookie.png" height="200px">
               <li class="fragment">attention à la bande passante disponible</li>
               <li class="fragment">attention à l'ordre</li>
-              <li class="fragment">attention au domaine</li>
             </ul>
  
             <aside class="notes">
-              un peu l'équivalent du Link en header mais avec le contenu en plus !
+              un peu l'équivalent du Link en header mais avec le contenu en plus  et envoyé avant le contenu HTML!
               <br>pour le cache : CASP (qui est une pré implem de cache-digest https://tools.ietf.org/html/draft-ietf-httpbis-cache-digest-00)
 
               <p>en fait les cas d'utilisations efficaces du push sont aujourd'hui restreints !
@@ -884,143 +429,67 @@
                 <p>src : https://docs.google.com/document/d/1K0NykTXBbbbTlv60t5MyJvXjqKGsCVNYHyLEXIxYMv0/preview
             </aside>
 
-          </section>
-
-          <section class="no-transition">
-            <h2>Server Push</h2>
-            <img style="background-color:white" src="assets/page_loading_nopush.svg">
-
-            <aside class="notes">
-              ça c'est un cas que le link rel:preload ne peut pas gérer car le serveur n'a pas encore répondu avec des headers HTTP (sauf s'il sait répondre plus tôt avec des headers)
-            </aside>
-
          </section>
 
          <section class="no-transition">
-            <h2>Server Push</h2>
-            <img style="background-color:white" src="assets/page_loading_push.svg">
-
+            <h2>Améliorer le Server Push</h2>
+            <ul>
+              <li class="fragment" data-fragment-index="1">Push from the Edge<br>
+              <li class="fragment" data-fragment-index="2">Push while processing<br>
+            </ul>
+              <img class="fragment" data-fragment-index="1" src="assets/pushedge.png" height="300">
+              <img class="fragment" data-fragment-index="2" src="assets/pushwhileprocessing.png" height="300">
             <aside class="notes">
+              ça c'est un cas que le link rel:preload ne peut pas gérer car le serveur n'a pas encore répondu avec des headers HTTP (sauf s'il sait répondre plus tôt avec des headers)
             120KB HTML page with critical CSS of 24KB and critical JS of 74KB over a network with an RTT of 100ms and infinite bandwidth?
             </aside>
 
          </section>
 
-        </section>
+       </section>
 
-        <section>
-          <section>
-            <h1>QUIC</h1>
+       <section>
 
-            <span class="fragment">Quick</span> <span class="fragment">UDP-based</span> <span class="fragment">Internet</span> <span class="fragment">Connections</span>
-            <img class="fragment" style="background-color:white;margin-right:10px" src="assets/tcp handshake.svg" height="250px"><img class="fragment" style="background-color:white;margin-right:10px" src="assets/tls handshake.svg" height="250px"><img class="fragment" style="background-color:white;" src="assets/tcp quic.png" height="250px">
+         <section>
+           <h1>de nouveaux problèmes</h1>
+         </section>
 
-            <aside class="notes">
-              <p>apparu en 2012/2013, utilisé aujourd'hui sur Chrome + serveurs Google
-              <p>UDP-based : pas TCP avec ces RTT SYN, SYN/ACK, ACK , fire and forget (utilisé pour logguer) mais avec des améliorations
-              <p>finalement le vrai problème c'est TCP et on peut pas le changer car les piles TCP sont dans les OS et personne, autant utiliser quelque chose de connu
-              <p>bandwidth estimation in each direction to avoid congestion.
-              <p>src: http://devsisters.github.io/goquic/, http://blog.davidsingleton.org/mobiletcp/ https://hpbn.co/
-            </aside>
-
-          </section>
-
-          <section>
-            <h1>QUIC</h1>
+         <section class="no-transition">
+            <h2>TCP Head-of-Line blocking</h2>
             <ul>
-              <li class="fragment">UDP = perte de paquets
+              <li>Perte de paquets possible (ex: réseaux mobiles)
+              
+              <img src="assets/packetlossh2.png" height="250"></li>
+              <li>La connexion TCP est "bloquée"
+              <li>Solutions possibles
               <ul>
-                <li>FEC (Forward Erroc Correction)<br> 
-                <img style="background-color:white" src="assets/fec-1024x406.png" height="200px"></li> 
-                <li>Packet Pacing<br>  
-                <img style="background-color:white" src="assets/packetpacing-1024x569.png" height="200px"> </li>
+                <li>le serveur doit adapter la taille des données envoyées dans les buffer TCP
+                <li>QUIC
               </ul>
+            </ul>
+
+            <aside class="notes">
+            des études Akamai montrent que dans les conditions où on a des pertes de paquet HTTP/1.1 fait mieux que HTTP2 ...
+            </aside>
+
+         </section>
+
+         <section class="no-transition">
+            <h2>Gestion des priorités</h2>
+            <ul>
+              <li>Firefox<br>
+                <img src="assets/prioff.png" height="200px">
               </li>
-            </ul>
-          </section>
-
-          <section>
-            <h1>QUIC</h1>
-            <ul>
-              <li class="fragment">multiplexing<br> 
-              <img style="background-color:white" src="assets/quicsolution-1024x306.png" height="250px"></li>
-            </ul>
-          </section>
-
-          <section>
-            <h1>QUIC</h1>
-            <ul>
-              <li>Particulièrement important en mobile
-              <img style="background-color:white" src="assets/tcp_network.png" height="250px"></li>
-              <li>Connection ID</li>
+              <li>Chrome<br>
+                <img src="assets/priochrome.png" height="200px"></li>
             </ul>
             <aside class="notes">
-            exemple : du reload qui prend moins de temps
-            switch de réseau
-            </aside>
-          </section>
-
-          <section>
-          <h1>QUIC</h1>
-            <img class="fragment" src="assets/loss2p_d200ms.gif">
-            <aside class="notes">
-            résultats
-            </aside>
-          </section>
-
-        </section>
-
-        <section>
-          <section>
-            <h2>Service workers</h2>
-            <ul>
-              <li class="fragment">Sorte de proxy in-page
-              <li class="fragment">Repose sur la nouvelle API Fetch et les Promises
-              <li class="fragment">Arrive sur les navigateurs doucement
-              <img src="assets/SW support.png" class="fragment">
-              <li class="fragment">Contraintes : HTTPS-only &amp; CORS
-              <li class="fragment">Usage : gestion fine du cache, offline, timeout, redirects, inspection, modification, prefetch 
-            </ul>
-
-            <aside class="notes">
-              <p>thread séparé / peut vivre en background et après le chargement de la page
-
-              <p>phase de register puis chargement du script
-              <p>gestion fine du cache : par exemple, servir un objet "dépassé" du cache plutôt qu'une erreur
-              <p>if (navigator.offline)
-              <p>sw-removecookies
-              <p>sw-delta (envoie la différence entre la version en cache et la version requêtée par le navigateur et présente sur le serveur)
             </aside>
 
-          </section>
-          <section>
-            <h2>Timeout sync scripts</h2>
-            <ul>
-              <li class="fragment">Certains scripts sont bloquants (A/B test)
-              <li class="fragment">Possibilité de les timeboxer (&lt;250ms)
-              <li class="fragment">Prévus par certains fournisseurs (Kameleoon, Optimizely)
-              <li class="fragment">Autre solution : Promise.race()
-            </ul>
+         </section>
 
-            <aside class="notes">
-
-            </aside>
-
-          </section>
-          <section>
-            <img src="assets/promise race.png">
-
-            <aside class="notes">
-
-            </aside>
-
-          </section>
-
-        </section>
-
-        <section>
-          <section>
-            <h1>Optimisations TLS</h1>
+         <section class="no-transition">
+            <h2>Optimisation TLS</h2>
             <ul>
               <li class="fragment">TLS False Start<br><img class="fragment" style="background-color:white" height="150px" src="assets/tcptls.svg"></li>
               <li class="fragment">Session Resume
@@ -1032,223 +501,34 @@
               <p>session resume : plus d'échanges de clé pour les sessions en cache
               <p>src: https://hpbn.co/transport-layer-security-tls/#certificate-revocation
             </aside>
-          </section>
-
-        </section>
-
-        <section>
-          <section>
-            <h1>Et les images ?</h1>
-            <img src="assets/repartition poids des pages.png">
  
-            <aside class="notes">
-              Et les images dans tout ça ?
-              Quand on parle mobile on parle responsive, retina, etc ... elles ont un fort impact sur le chargement des sites, notamment car elles représentent 60 à 70% du poids d'une page
-            </aside>
+         </section>
 
-          </section>
+       </section>
 
-          <section>
-            <h2>Nouveaux formats</h2>
-            <h3>JPG 2000, JPG-XR, WebP</h3>
-            <img src="assets/repartition format image 2016.png" class="fragment">
- 
-            <p class="fragment">WTF ???</p>
+       <section>
 
-            <aside class="notes">
-              Franchement ce sont des formats exotiques. 
-              <p>en fait, assez facile à comprendre, les imges ce n'est pas que pour le web.
-              <p>Si certains n'ont pas les outils mour les lire aucun intérêt (l'expérience de FB sur le WebP est significative)
-              <p>Du coup il reste les anciens formats
-              <p>Mais ayé Firefox a implémenté WebP !!! (https://bugzilla.mozilla.org/show_bug.cgi?id=1294490)
-              <p>
-            </aside>
-
-          </section>
-
-          <section>
-            <h2>JPG</h2>
- 
-            <ul>
-              <li>MozJPEG</li>
-              <li>Compression avancée
-              <li>Meilleure qualité sur les dessins et les images Retina
-            </ul>
-            <aside class="notes">
-              Eh oui il y a encore du mouvement dans ce format !!
-              <p>notamment avec MozJpg
-            </aside>
-
-          </section>
-
-          <section data-transition="fast">
-            <h2>PNG</h2>
-            <img class="" src="assets/standards.png">
-          </section>
-
-          <section data-transition="fast">
-            <h2>JPG standard 1</h2>
-            <img class="" src="assets/standards1.jpg">
-          </section>
-
-          <section data-transition="fast">
-            <h2>JPG standard 2</h2>
-            <img class="" src="assets/standards2.jpg">
-          </section>
-
-          <section data-transition="fast">
-            <h2>MozJPEG</h2>
-            <img class="" src="assets/standards3.jpg">
-          </section>
-
-          <section>
-            <h2>JPG "intelligent"</h2>
- 
-            <ul>
-              <li>DSSIM</li>
-              <li>Trouve la meilleure qualité JPG en comparant à l'original
-              <li>cjpeg-dssim = jpegoptim + mozjpeg + dssim
-            </ul>
-            <aside class="notes">
-              structural (dis)similarity image
-              <p>notamment avec MozJpg
-              <p>src: https://github.com/pornel/dssim
-            </aside>
-
-          </section>
-
-           <section>
-            <h2>GIF</h2>
-            Un seul outil : LossyGif (fork de GifSicle)
-            <ul>
-              <li>Possibilité de les transformer en PNG s'ils ne sont pas animés</li>
-              <li>Possibilité de les optimiser fortement sinon</li>
-            </ul>
-            <aside class="notes">
-              C'est bête mais on fait encore plein d'animations avec des GIf sur certains sites
-              <p>J'en ai même vu une de 13Mo sur le site d'Ikea il y a quelques semaines ...
-              <p>même pas obligé de changer les extension, c'est comme pour les WebP, il suffit de renvoyer le bon content-type en fonction du Accept envoyé par le navigateur
-            </aside>
-
-          </section>
-
-          <section data-transition="fast">
-            <h2>Client Hints</h2>
-            <ul>
-              <li>Prendre en compte le vrai contexte</li>
-              <li>Moins de code pour les images responsive</li>
-            </ul>
-            <aside class="notes">
-              <p>src: http://httpwg.org/http-extensions/client-hints.html
-              <p>src: https://developers.google.com/web/updates/2015/09/automating-resource-selection-with-client-hints
-            </aside>
-          </section>
-          <section data-transition="fast">
-            <h2>Client Hints</h2>
-            <img src="assets/picture full.png" height="600px">             
-          </section>
-
-          <section data-transition="fast">
-            <h2>Client Hints</h2>
-            <img src="assets/picture with ch.png">             
-          </section>
-
-          <section data-transition="fast">
-            <h2>Client Hints</h2>
-            <img src="assets/ch-negotiation.png">
-            <aside class="notes">
-              hints utile pour la perf : save-data
-            </aside>
-          </section>
-
-
-        </section>
-
-        <section>
-          <section>
-            <h1>AMP</h1>
-            <ul>
-              <li class="fragment">Accelerated Mobile Pages</li>
-              <li class="fragment">Composants HTML sous forte contrainte webperf
-              <li class="fragment">D'abord pour les sites de contenu et premières initiatives pour les sites ecommerce
-              <li class="fragment">Pages AMP mises en avant dans les SERP
-            </ul>
-            <aside class="notes">
-              lancé par Google, en partie parce que la vitesse c'est son dada, en partie parce que Facebook et Apple ont lancé des solutions concurrentes et en partie parce que la pub c'est son business principal.
-
-              <p> je préfère les quelque chose de plus ouvert et générique (CPP)
-              <p>src: https://amphtml.wordpress.com/2016/08/22/getting-started-with-amp-for-e-commerce/
-            </aside>
-          </section>
-
-        </section>
-
-        <section>
-
-          <section>
-            <h1>Nouvelles métriques</h1>
- 
-            <aside class="notes">
-            </aside>
-
-          </section>
-
-          <section>
-            <h2>Le load time c'est mort</h2>
-            <div align="left" style="width:50%;float:left;margin:0 50px 300px 0">
-              <img src="assets/correlation metrics load time.png">
-              <img src="assets/correlation metrics render.png">
-            </div>
-
-            <ul class="fragment">
-              <li>Speed Index
-              <li>Start Render
-              <li class="fragment">Disponible en RUM !
-            </ul>
- 
-            <aside class="notes">
-              load time : exemple de la page blanche
-              Speed index mesure la vitesse de remplissage de la page
-              reste à améliorer mais c'est déjà ça 
-            </aside>
-
-          </section>
-
-          <section data-transition="fast">
-            <h2>Speed Index</h2>
-            <img src="assets/speedindex1.png">
-          </section>
-
-          <section data-transition="fast">
-            <h2>Speed Index</h2>
-            <img src="assets/speedindex2.png">
-          </section>
-
-          <section data-transition="fast">
-            <h2>Speed Index</h2>
-            <img src="assets/speedindex3.png">
-          </section>
-  
-        </section>
-
-        <section>
-
-          <section>
-            <h1>Conclusion</h1>
- 
-            <aside class="notes">
+         <section>
+           <h1>Conclusion</h1>
+             <aside class="notes">
+               tout ça pour dire que HTTP/2 n'a pas été la silver bullet qui avait été marketée et vendue
+               <br>
+               On doit toujours gérer les problèmes liés à la latence, à la connectivité intermittente, au fait de travaier avec des devices différents
+               <br>
               On a encore du job pour un moment !
-            </aside>
+             </aside>
 
           </section>
 
           <section>
-            <h2>ce qui est toujours d'actualité</h2>
+            <h2>toujours d'actualité</h2>
             <ul>
-              <li class="fragment">compression des pages : gzip, images
-              <li class="fragment">cache (expires, etags si bien configuré)
+              <li class="fragment">compression : gzip, images
+              <li class="fragment">cache 
               <li class="fragment">CDN 
               <li class="fragment">CSS on top / deferJS
+              <li class="fragment">Lazyloading / inlining
+              <li class="fragment">Preconnect / Preload / Prefetch
             </ul>
  
             <aside class="notes">
@@ -1258,12 +538,14 @@
           </section>
           
           <section>
-            <h2>ce qui est à mettre en place</h2>
+            <h2>à mettre en place</h2>
             <ul>
               <li class="fragment">chargement progressif (voire offline) 
               <li class="fragment">asynchrone
               <li class="fragment">avec le moins de requetes DNS possible
+              <li class="fragment">en fonction du contexte
               <li class="fragment">et avec un budget webperf
+              <li class="fragment">sans oublier les optimisations TLS
             </ul>
  
             <aside class="notes">
@@ -1272,36 +554,17 @@
           </section>
 
           <section>
-            <h2>A prévoir</h2>
+            <h2>A évaluer</h2>
             <ul>
               <li class="fragment">suppression sharding
-              <li class="fragment">quasi suppression concaténation
-              <li class="fragment">critical push / inlining / preload
-              <li class="fragment">priorisation des éléments ATF
+              <li class="fragment">suppression concaténation
+              <li class="fragment">server push <span style="font-size:smaller">vs</span> critical inlining <span style="font-size:smaller">vs</span> preload
             </ul>
  
             <aside class="notes">
             </aside>
 
           </section>
-        <section>
-          Ce dont je n'ai (peut être) pas pu parler
-          <ul style="text-align:left">
-            <li>in-page perf (rendering, layout, JS, requestAnimationFrame, web workers, memory) 
-            <li>backend 
-            <li>outils de mesure, resources timing, navigation timing
-            <li>TLS (session reuse, cache, tls record, certificate size) 
-            <li>TCP (slow start, tcp window scaling, disable slow start after idle) 
-            <li>WebRTC
-            <li>Impact third parties
-            <li>AMP
-            <li>Content Performance Policy
-          </ul>
-          <aside class="notes">
-            
-          </aside>
-        </section>
-
  
         </section>
 
@@ -1368,7 +631,11 @@
 					{ src: 'plugin/notes/notes.js', async: true }
 				]
 			});
-
+            Reveal.addEventListener("fragmenthidden", function(event) {
+              console.log(event);
+              event.fragment.style.display="none";
+            });
+ 
 		</script>
 
 	</body>
